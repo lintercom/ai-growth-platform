@@ -10,6 +10,7 @@ Monorepo obsahující:
 - **aig-workflows**: Analyzer/Architect/Export workflows
 - **aig-schemas**: Zod schémata artefaktů
 - **aig-utils**: Utility funkce (paths, config storage, fs helpers)
+- **aig-web-toolkit**: AI-First Web Toolkit (12 modulů nahrazujících klasický webový stack)
 
 ## 🚀 Instalace
 
