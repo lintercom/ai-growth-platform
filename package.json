@@ -11,7 +11,7 @@
     "lint": "pnpm -r --filter './packages/*' lint",
     "test": "pnpm -r --filter './packages/*' test",
     "typecheck": "pnpm -r --filter './packages/*' typecheck",
-    "aig": "pnpm --filter @aig/cli exec aig",
+    "aig": "node packages/aig-cli/dist/bin/aig.js",
     "prepublishOnly": "pnpm -r run build"
   },
   "keywords": [
