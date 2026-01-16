@@ -20,7 +20,7 @@ pnpm -r run build
 pnpm build:exe
 ```
 
-EXE soubor bude vytvořen v `packages/bin/aig-installer.exe`.
+EXE soubor bude vytvořen v `bin/aig-installer.exe` (v root adresáři projektu).
 
 ## Jak to funguje
 
@@ -41,10 +41,10 @@ Po vytvoření EXE můžete:
 
 ```bash
 # Spustit EXE (automaticky provede instalaci při prvním spuštění)
-.\packages\bin\aig-installer.exe --help
+.\bin\aig-installer.exe --help
 
 # Nebo zkopírovat do jakéhokoliv adresáře
-copy packages\bin\aig-installer.exe C:\Tools\aig.exe
+copy bin\aig-installer.exe C:\Tools\aig.exe
 aig.exe setup
 aig.exe doctor
 ```

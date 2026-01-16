@@ -31,7 +31,7 @@
     "build": "tsc",
     "clean": "rm -rf dist",
     "typecheck": "tsc --noEmit",
-    "build:exe": "tsc && pkg dist/bin/aig-installer.js --targets node18-win-x64 --output-path ../bin --out-path ../bin"
+    "build:exe": "pkg src/bin/aig-installer.cjs --targets node18-win-x64 --output-path ../../bin --out-path ../../bin"
   },
   "pkg": {
     "assets": [
