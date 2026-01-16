@@ -52,6 +52,25 @@ pnpm aig init
 
 ---
 
+### 💻 EXE soubor (Windows - doporučeno)
+
+Pro Windows můžete vytvořit EXE soubor s automatickou instalací:
+
+```bash
+# Po klonování a build projektu:
+pnpm build:exe
+```
+
+EXE bude v `packages/bin/aig-installer.exe`. Při prvním spuštění automaticky:
+- Naklonuje repozitář z GitHubu
+- Nainstaluje závislosti
+- Zbuilduje projekt
+- Otevře interaktivní konzoli
+
+Viz [BUILD_EXE.md](BUILD_EXE.md) pro detailní návod.
+
+---
+
 ### 📦 Manuální instalace
 
 ```bash
