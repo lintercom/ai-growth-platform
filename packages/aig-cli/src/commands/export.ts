@@ -1,5 +1,5 @@
 import { Command } from 'commander';
-import { getRunDir, getRunsDir, readJsonFile, listDir, dirExists, readFile, fileExists } from '@aig/utils';
+import { getRunDir, getRunsDir, readJsonFile, listDir, dirExists, fileExists } from '@aig/utils';
 import { getProjectDir } from '@aig/utils';
 
 export function exportCommand(program: Command): void {
@@ -37,9 +37,17 @@ export function exportCommand(program: Command): void {
         if (options.from === 'latest') {
           // Sort by name (timestamp) and get latest
           runs.sort().reverse();
-          runId = runs[0]!;
+          runId = runs[0] || '';
+          if (!runId) {
+            console.error(`❌ Nenalezen žádný run`);
+            process.exit(1);
+          }
         } else {
-          runId = options.from;
+          runId = options.from || '';
+          if (!runId) {
+            console.error(`❌ Run ID musí být zadán`);
+            process.exit(1);
+          }
         }
 
         const runDir = getRunDir(options.project, runId);
