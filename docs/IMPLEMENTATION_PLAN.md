@@ -261,7 +261,7 @@ aig export md --project demo --from latest
 
 Nebo ručně na GitHubu:
 1. Vytvořit nové repo `ai-growth-platform` na GitHubu
-2. `git remote add origin https://github.com/<username>/ai-growth-platform.git`
+2. `git remote add origin https://github.com/lintercom/ai-growth-platform.git`
 3. `git push -u origin main`
 
 ---
@@ -307,7 +307,7 @@ Podrobný implementační plán pro adaptační vrstvy (StorageAdapter, EventSin
 
 ```bash
 # Klonování
-git clone https://github.com/<username>/ai-growth-platform.git
+git clone https://github.com/lintercom/ai-growth-platform.git
 cd ai-growth-platform
 
 # Instalace

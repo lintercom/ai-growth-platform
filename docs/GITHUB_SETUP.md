@@ -26,7 +26,7 @@ gh repo create ai-growth-platform --private --source=. --remote=origin --push
 
 2. **Připojte remote a pushněte:**
    ```bash
-   git remote add origin https://github.com/<VAS_USERNAME>/ai-growth-platform.git
+   git remote add origin https://github.com/lintercom/ai-growth-platform.git
    git branch -M main
    git push -u origin main
    ```
