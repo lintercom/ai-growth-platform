@@ -3,6 +3,7 @@ import type { StorageHealth as StorageHealthType, Artifact } from '@aig/schemas'
 import { StorageHealthSchema } from '@aig/schemas';
 import { 
   getProjectDir, 
+  getProjectsDir,
   getRunDir, 
   getRunsDir, 
   ensureDir, 
@@ -19,22 +20,17 @@ import {
 export class FileStorageAdapter implements StorageAdapter {
   async init(): Promise<void> {
     // Zajistíme, že projects adresář existuje
-    const projectsDir = getProjectDir('');
-    // getProjectDir('') vrací projects/, takže potřebujeme parent
-    const projectsParent = projectsDir.replace(/[^/\\]+$/, '');
-    if (projectsParent && projectsParent !== projectsDir) {
-      await ensureDir(projectsParent);
-    }
+    const projectsDir = getProjectsDir();
+    await ensureDir(projectsDir);
   }
 
   async healthCheck(): Promise<StorageHealthType> {
     try {
-      const projectsDir = getProjectDir('');
-      const parentDir = projectsDir.split(/[/\\]/).slice(0, -1).join('/');
+      const projectsDir = getProjectsDir();
       
       // Kontrola jestli můžeme vytvořit/číst projects adresář
-      if (!dirExists(parentDir)) {
-        await ensureDir(parentDir);
+      if (!dirExists(projectsDir)) {
+        await ensureDir(projectsDir);
       }
 
       return StorageHealthSchema.parse({
