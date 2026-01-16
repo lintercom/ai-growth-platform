@@ -8,6 +8,24 @@
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/<username>/ai-growth-platform.git"
+  },
+  "keywords": [
+    "ai",
+    "cli",
+    "openai",
+    "seo",
+    "analysis"
+  ],
+  "engines": {
+    "node": ">=18.0.0"
+  },
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf dist",

@@ -10,7 +10,9 @@
     "clean": "pnpm -r --filter './packages/*' clean && rm -rf node_modules",
     "lint": "pnpm -r --filter './packages/*' lint",
     "test": "pnpm -r --filter './packages/*' test",
-    "typecheck": "pnpm -r --filter './packages/*' typecheck"
+    "typecheck": "pnpm -r --filter './packages/*' typecheck",
+    "aig": "pnpm --filter @aig/cli exec aig",
+    "prepublishOnly": "pnpm -r run build"
   },
   "keywords": [
     "ai",

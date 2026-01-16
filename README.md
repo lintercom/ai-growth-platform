@@ -14,17 +14,41 @@ Monorepo obsahující:
 
 ## 🚀 Instalace
 
+### Z GitHubu (doporučeno)
+
 ```bash
-# Klonování repo
+# Klonování repozitáře
 git clone https://github.com/<username>/ai-growth-platform.git
 cd ai-growth-platform
 
 # Instalace závislostí
 pnpm install
 
-# Build
-pnpm -w build
+# Build všech balíčků
+pnpm -r run build
+
+# Lokální instalace CLI (volitelné)
+pnpm link -g
+
+# Ověření instalace
+aig --help
 ```
+
+**Poznámka:** Pro lokální použití můžete spouštět CLI přímo:
+```bash
+pnpm --filter @aig/cli exec aig --help
+```
+
+Nebo přidat do `package.json` script:
+```json
+{
+  "scripts": {
+    "aig": "pnpm --filter @aig/cli exec aig"
+  }
+}
+```
+
+Pak spustíte: `pnpm aig --help`
 
 ## 📋 Požadavky
 
