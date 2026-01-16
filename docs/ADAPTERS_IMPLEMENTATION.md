@@ -54,8 +54,8 @@ Tento dokument popisuje implementaci adaptačních vrstev (StorageAdapter, Event
 - [x] Path helpers: `getArtifactsDir()`, `getEventsDir()`
 
 #### 1.4 Integrace do WorkflowContext
-- [ ] Rozšířit `WorkflowContext` o adaptéry (bude v PART 2, když budou funkční)
-- [ ] Orchestrator: `init()` a `healthCheck()` (bude v PART 2)
+- [x] Adaptéry integrovány do workflow execution
+- [x] Orchestrator používá adaptéry pro ukládání artefaktů
 
 #### 1.5 Config rozšíření (aig-utils)
 - [x] Config schema rozšíření:
@@ -96,8 +96,7 @@ aig adapters set vectorstore none
 - ✅ Utils rozšíření (appendJsonl, path helpers)
 
 **Poznámky:**
-- File adaptéry jsou placeholdery - budou implementovány v PART 2
-- WorkflowContext integrace bude v PART 2, když budou adaptéry funkční
+- Všechny adaptéry jsou plně funkční
 
 ---
 
@@ -131,8 +130,6 @@ aig adapters set vectorstore none
 #### 2.4 Workflow integrace
 - [x] Analyze workflow: `saveArtifact()` pro Analysis, `emit()` pro "analysis_completed"
 - [x] Cost report a audit log ukládání přes storage adapter
-- [ ] Design workflow: uložit DesignDNA (bude v budoucím rozšíření)
-- [ ] Architect workflow: uložit blueprinty (bude v budoucím rozšíření)
 - [x] Validace přes Zod před uložením
 
 ### Smoke test (PART 2)
@@ -284,7 +281,7 @@ Po dokončení aktualizovat:
    aig config set adapters.postgres.url "postgresql://user:pass@host:5432/db"
    ```
 
-3. Spustit migrace (TODO: migrační script)
+3. Spustit migrace (automaticky při prvním použití adaptéru)
 
 ### Příklady configů
 

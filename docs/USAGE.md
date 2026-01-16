@@ -158,3 +158,11 @@ Zobrazí:
 - Config adresář
 - OpenAI API klíč (validace)
 - Projekty adresář
+- Zdraví DB adapterů (pokud jsou konfigurovány)
+
+## Další dokumentace
+
+- **[CLI.md](./CLI.md)** - Kompletní referenční dokumentace CLI příkazů
+- **[ARTIFACTS.md](./ARTIFACTS.md)** - Formáty a struktura artefaktů
+- **[OVERVIEW.md](./OVERVIEW.md)** - Přehled platformy a architektura
+- **[ADAPTERS_IMPLEMENTATION.md](./ADAPTERS_IMPLEMENTATION.md)** - Adaptační vrstvy

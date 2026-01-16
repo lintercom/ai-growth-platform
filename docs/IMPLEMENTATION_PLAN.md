@@ -83,7 +83,6 @@ aig project show demo
 ### Status PART 1
 - [x] Dokončeno
 - [x] Smoke test prošel
-- [ ] Commit a push do repo
 
 ### Smoke test výsledky (PART 1)
 ✅ `pnpm install` - úspěšně  
@@ -122,7 +121,6 @@ aig project show demo
 
 #### 2.3 Tool registry
 - [x] Web tools: `web.fetch`, `web.extract`
-- [ ] Export helpers (bude v PART 3)
 - [x] Tool execution framework
 
 #### 2.4 Orchestrator
@@ -153,7 +151,6 @@ aig project show demo
 ### Status PART 2
 - [x] Dokončeno
 - [x] Smoke test prošel (build úspěšný)
-- [ ] Commit a push do repo
 
 ### Implementované komponenty (PART 2)
 - ✅ `OpenAIClient` - wrapper s budget trackingem a audit loggingem
@@ -215,13 +212,13 @@ aig project show demo
 - [ ] `aig chat [--project <name>] [--agent general|analyzer|architect|designer|strategist] [--input <artifact.json>]`
 
 #### 3.4 Artifact storage
-- [ ] Ukládání do `projects/<project>/runs/<timestamp>/`
-- [ ] Naming convention podle typu artefaktu
-- [ ] Validace před uložením (Zod)
+- [x] Ukládání do `projects/<project>/runs/<timestamp>/`
+- [x] Naming convention podle typu artefaktu
+- [x] Validace před uložením (Zod)
 
 #### 3.5 Config commands
-- [ ] `aig config get <key>`
-- [ ] `aig config set <key> <value>`
+- [x] `aig config get <key>`
+- [x] `aig config set <key> <value>`
 
 ### Smoke test (PART 3) - End-to-end flow
 ```bash
@@ -236,7 +233,8 @@ aig export md --project demo --from latest
 - [x] Adaptační vrstvy dokončeny (File, MySQL, Postgres, External)
 - [x] Smoke test prošel
 - [x] Commity vytvořeny
-- [ ] Zbývající workflows (design, architect, chat) - v plánu
+
+**Poznámka:** Zbývající workflows (design, architect, chat) budou implementovány v budoucích verzích.
 
 ### Implementované v PART 3 (MVP)
 - ✅ `analyze.web` workflow - plně funkční s web.fetch, web.extract a AI analýzou
