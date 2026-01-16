@@ -4,7 +4,7 @@
 
 ```bash
 # Klonování repozitáře
-git clone https://github.com/<username>/ai-growth-platform.git
+git clone https://github.com/lintercom/ai-growth-platform.git
 cd ai-growth-platform
 
 # Instalace závislostí
