@@ -4,7 +4,8 @@
   "description": "CLI nástroje pro AI Growth Platform",
   "type": "module",
   "bin": {
-    "aig": "./dist/bin/aig.js"
+    "aig": "./dist/bin/aig.js",
+    "aig-installer": "./dist/bin/aig-installer.js"
   },
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
@@ -29,7 +30,17 @@
   "scripts": {
     "build": "tsc",
     "clean": "rm -rf dist",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "build:exe": "tsc && pkg dist/bin/aig-installer.js --targets node18-win-x64 --output-path ../bin --out-path ../bin"
+  },
+  "pkg": {
+    "assets": [
+      "../../node_modules/@aig/**/*"
+    ],
+    "targets": [
+      "node18-win-x64"
+    ],
+    "outputPath": "dist"
   },
   "dependencies": {
     "@aig/core": "workspace:*",
