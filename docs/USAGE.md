@@ -70,10 +70,18 @@ aig export md --project demo --from 1234567890-abcdefgh
 
 ### Config & Setup
 - `aig setup` - Nastavení API klíčů
-- `aig doctor` - Kontrola prostředí
+- `aig doctor` - Kontrola prostředí (včetně testování adapterů)
 - `aig config get <key>` - Zobrazí config hodnotu
 - `aig config set <key> <value>` - Nastaví config hodnotu
+- `aig config get <path>` - Zobrazí nested config hodnotu (např. `adapters.mysql.url`)
+- `aig config set <path> <value>` - Nastaví nested config hodnotu
 - `aig config list` - Zobrazí všechny config hodnoty
+
+### Adaptéry
+- `aig adapters show` - Zobrazí aktuální konfiguraci adapterů
+- `aig adapters set storage <file|mysql|postgres>` - Nastaví storage adapter
+- `aig adapters set eventsink <none|file|db-aggregate|external>` - Nastaví event sink adapter
+- `aig adapters set vectorstore <none|local|external>` - Nastaví vector store adapter
 
 ### Projekty
 - `aig init` - Inicializace workspace

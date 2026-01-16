@@ -50,11 +50,11 @@ export class AdapterFactory {
         const { FileStorageAdapter } = await import('./file-storage.js');
         return new FileStorageAdapter();
       case 'mysql':
-        // MySQLStorageAdapter bude implementován v PART 3
-        throw new Error('MySQLStorageAdapter not yet implemented (PART 3)');
+        const { MySQLStorageAdapter } = await import('./mysql-storage.js');
+        return new MySQLStorageAdapter(config.mysql);
       case 'postgres':
-        // PostgresStorageAdapter bude implementován v PART 3
-        throw new Error('PostgresStorageAdapter not yet implemented (PART 3)');
+        const { PostgresStorageAdapter } = await import('./postgres-storage.js');
+        return new PostgresStorageAdapter(config.postgres);
       default:
         throw new Error(`Unknown storage adapter type: ${type}`);
     }
@@ -75,11 +75,11 @@ export class AdapterFactory {
         const { FileEventSinkAdapter } = await import('./file-event-sink.js');
         return new FileEventSinkAdapter();
       case 'db-aggregate':
-        // DBAggregateEventSinkAdapter bude implementován v PART 3
-        throw new Error('DBAggregateEventSinkAdapter not yet implemented (PART 3)');
+        const { DBAggregateEventSinkAdapter } = await import('./db-aggregate-event-sink.js');
+        return new DBAggregateEventSinkAdapter(config);
       case 'external':
-        // ExternalEventSinkAdapter bude implementován v PART 3
-        throw new Error('ExternalEventSinkAdapter not yet implemented (PART 3)');
+        const { ExternalEventSinkAdapter } = await import('./external-event-sink.js');
+        return new ExternalEventSinkAdapter(config.external);
       default:
         throw new Error(`Unknown event sink adapter type: ${type}`);
     }
@@ -105,8 +105,8 @@ export class AdapterFactory {
         }
         return adapter;
       case 'external':
-        // ExternalVectorStoreAdapter bude implementován v PART 3
-        throw new Error('ExternalVectorStoreAdapter not yet implemented (PART 3)');
+        const { ExternalVectorStoreAdapter } = await import('./external-vector-store.js');
+        return new ExternalVectorStoreAdapter(config.external);
       default:
         throw new Error(`Unknown vector store adapter type: ${type}`);
     }
