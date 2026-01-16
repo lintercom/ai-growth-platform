@@ -17,7 +17,7 @@ Monorepo obsahující:
 ### Z GitHubu (doporučeno)
 
 ```bash
-# Klonování repozitáře
+# Klonování repozitáře (nahraďte <username> svým GitHub username)
 git clone https://github.com/<username>/ai-growth-platform.git
 cd ai-growth-platform
 
