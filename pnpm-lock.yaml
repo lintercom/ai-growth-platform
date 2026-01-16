@@ -17,6 +17,9 @@ importers:
 
   packages/ai-toolkit-core:
     dependencies:
+      '@aig/schemas':
+        specifier: workspace:*
+        version: link:../aig-schemas
       openai:
         specifier: ^4.20.0
         version: 4.104.0(zod@3.25.76)
@@ -42,6 +45,9 @@ importers:
       '@aig/utils':
         specifier: workspace:*
         version: link:../aig-utils
+      '@aig/workflows':
+        specifier: workspace:*
+        version: link:../aig-workflows
       commander:
         specifier: ^11.1.0
         version: 11.1.0

@@ -17,6 +17,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "@aig/schemas": "workspace:*",
     "openai": "^4.20.0",
     "zod": "^3.22.4"
   },

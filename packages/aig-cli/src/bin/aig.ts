@@ -6,6 +6,8 @@ import { doctorCommand } from '../commands/doctor.js';
 import { initCommand } from '../commands/init.js';
 import { projectCommand } from '../commands/project.js';
 import { configCommand } from '../commands/config.js';
+import { analyzeCommand } from '../commands/analyze.js';
+import { exportCommand } from '../commands/export.js';
 
 const program = new Command();
 
@@ -20,5 +22,7 @@ doctorCommand(program);
 initCommand(program);
 configCommand(program);
 projectCommand(program);
+analyzeCommand(program);
+exportCommand(program);
 
 program.parse();
