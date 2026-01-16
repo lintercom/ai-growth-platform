@@ -30,3 +30,6 @@ Thumbs.db
 projects/
 examples/demo/runs/
 *.local.json
+
+# Lokální klony (pokud klonujete do stejného adresáře)
+ai-growth-platform/
