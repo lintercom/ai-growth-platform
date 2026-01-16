@@ -14,7 +14,37 @@ Monorepo obsahující:
 
 ## 🚀 Instalace
 
-### Z GitHubu (doporučeno)
+### ⚡ Rychlá instalace (automatická)
+
+**Windows (PowerShell):**
+```powershell
+# Stáhněte a spusťte instalační skript
+iwr -useb https://raw.githubusercontent.com/lintercom/ai-growth-platform/main/install.ps1 | iex
+```
+
+**Linux/macOS:**
+```bash
+# Stáhněte a spusťte instalační skript
+curl -fsSL https://raw.githubusercontent.com/lintercom/ai-growth-platform/main/install.sh | bash
+```
+
+Instalační skript automaticky:
+- ✅ Zkontroluje Node.js a pnpm
+- ✅ Naklonuje repozitář
+- ✅ Nainstaluje závislosti
+- ✅ Zbuilduje projekt
+- ✅ Nainstaluje CLI globálně
+
+**Po instalaci:**
+```bash
+aig setup     # Nastavení OpenAI API klíče
+aig doctor    # Kontrola prostředí
+aig init      # Inicializace workspace
+```
+
+---
+
+### 📦 Manuální instalace
 
 ```bash
 # Klonování repozitáře
@@ -27,28 +57,14 @@ pnpm install
 # Build všech balíčků
 pnpm -r run build
 
-# Lokální instalace CLI (volitelné)
-pnpm link -g
+# Globální instalace CLI
+cd packages/aig-cli
+pnpm link --global
+cd ../..
 
-# Ověření instalace
-aig --help
+# Nebo použijte pnpm script z root adresáře
+pnpm aig --help
 ```
-
-**Poznámka:** Pro lokální použití můžete spouštět CLI přímo:
-```bash
-pnpm --filter @aig/cli exec aig --help
-```
-
-Nebo přidat do `package.json` script:
-```json
-{
-  "scripts": {
-    "aig": "pnpm --filter @aig/cli exec aig"
-  }
-}
-```
-
-Pak spustíte: `pnpm aig --help`
 
 ## 📋 Požadavky
 
