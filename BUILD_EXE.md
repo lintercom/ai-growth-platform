@@ -40,13 +40,19 @@ EXE soubor bude vytvořen v `bin/aig-installer.exe` (v root adresáři projektu)
 Po vytvoření EXE můžete:
 
 ```bash
-# Spustit EXE (automaticky provede instalaci při prvním spuštění)
-.\bin\aig-installer.exe --help
+# Spustit přes .bat wrapper (doporučeno - správně předá argumenty)
+.\bin\aig.bat --help
+.\bin\aig.bat setup
+.\bin\aig.bat doctor
 
 # Nebo zkopírovat do jakéhokoliv adresáře
 copy bin\aig-installer.exe C:\Tools\aig.exe
-aig.exe setup
-aig.exe doctor
+copy bin\aig.bat C:\Tools\aig.bat
+aig.bat setup
+aig.bat doctor
+
+# Poznámka: Spouštění EXE přímo s argumenty může mít problémy kvůli pkg
+# Použijte .bat wrapper pro spolehlivé předávání argumentů
 ```
 
 ## Distribuce
