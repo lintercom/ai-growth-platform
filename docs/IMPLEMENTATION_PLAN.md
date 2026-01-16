@@ -267,6 +267,34 @@ Nebo ručně na GitHubu:
 
 ---
 
+## Adapters Implementation
+
+Podrobný implementační plán pro adaptační vrstvy (StorageAdapter, EventSinkAdapter, VectorStoreAdapter) je v samostatném dokumentu:
+
+**Viz:** [docs/ADAPTERS_IMPLEMENTATION.md](./ADAPTERS_IMPLEMENTATION.md)
+
+### Stručné shrnutí:
+
+#### PART 1 — Rozhraní + schémata + výběr adapterů
+- Zod schémata pro health checks, artifacts, events, vectors
+- Interfaces a factory pattern
+- Config rozšíření
+- CLI příkazy `aig adapters`
+
+#### PART 2 — MVP implementace
+- FileStorageAdapter
+- FileEventSinkAdapter  
+- LocalVectorStoreAdapter (SQLite)
+
+#### PART 3 — Produkční konektory
+- MySQLStorageAdapter
+- PostgresStorageAdapter
+- DBAggregateEventSinkAdapter
+- ExternalEventSinkAdapter (HTTP webhook)
+- ExternalVectorStoreAdapter (HTTP API)
+
+---
+
 ## Poznámky
 
 - Všechny JSON artefakty musí validovat přes Zod (aig-schemas)

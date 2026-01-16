@@ -1,4 +1,4 @@
-import { mkdir, writeFile, readFile, readdir } from 'node:fs/promises';
+import { mkdir, writeFile, readFile, readdir, appendFile } from 'node:fs/promises';
 import { existsSync, statSync } from 'node:fs';
 import { dirname } from 'node:path';
 
@@ -56,4 +56,13 @@ export async function listDir(dirPath: string): Promise<string[]> {
     return [];
   }
   return readdir(dirPath);
+}
+
+/**
+ * Přidá řádek do JSONL souboru
+ */
+export async function appendJsonl(filePath: string, data: unknown): Promise<void> {
+  await ensureFileDir(filePath);
+  const line = JSON.stringify(data) + '\n';
+  await appendFile(filePath, line, 'utf-8');
 }

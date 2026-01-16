@@ -8,6 +8,7 @@ import { projectCommand } from '../commands/project.js';
 import { configCommand } from '../commands/config.js';
 import { analyzeCommand } from '../commands/analyze.js';
 import { exportCommand } from '../commands/export.js';
+import { adaptersCommand } from '../commands/adapters.js';
 
 const program = new Command();
 
@@ -24,5 +25,6 @@ configCommand(program);
 projectCommand(program);
 analyzeCommand(program);
 exportCommand(program);
+adaptersCommand(program);
 
 program.parse();

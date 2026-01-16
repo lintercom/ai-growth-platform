@@ -3,10 +3,33 @@ import { existsSync } from 'node:fs';
 import { getConfigDir, getConfigPath } from './paths.js';
 import { z } from 'zod';
 
+const AdaptersConfigSchema = z.object({
+  storage: z.enum(['file', 'mysql', 'postgres']).default('file').optional(),
+  eventsink: z.enum(['none', 'file', 'db-aggregate', 'external']).default('none').optional(),
+  vectorstore: z.enum(['none', 'local', 'external']).default('none').optional(),
+  mysql: z.object({
+    url: z.string().optional(),
+    host: z.string().optional(),
+    port: z.number().optional(),
+    user: z.string().optional(),
+    password: z.string().optional(),
+    database: z.string().optional(),
+  }).optional(),
+  postgres: z.object({
+    url: z.string().optional(),
+  }).optional(),
+  external: z.object({
+    endpoint: z.string().optional(),
+    apiKey: z.string().optional(),
+    vectorEndpoint: z.string().optional(),
+  }).optional(),
+});
+
 const ConfigSchema = z.object({
   openaiApiKey: z.string().optional(),
   defaultMarket: z.string().optional(),
   defaultBudget: z.number().optional(),
+  adapters: AdaptersConfigSchema.optional(),
 });
 
 export type Config = z.infer<typeof ConfigSchema>;
@@ -64,4 +87,48 @@ export async function getConfigValue<K extends keyof Config>(key: K): Promise<Co
  */
 export async function setConfigValue<K extends keyof Config>(key: K, value: Config[K]): Promise<void> {
   await saveConfig({ [key]: value });
+}
+
+/**
+ * Získá hodnotu z nested configu (např. adapters.storage)
+ */
+export async function getNestedConfigValue(path: string): Promise<unknown> {
+  const config = await loadConfig();
+  const parts = path.split('.');
+  let value: unknown = config;
+  
+  for (const part of parts) {
+    if (value && typeof value === 'object' && part in value) {
+      value = (value as Record<string, unknown>)[part];
+    } else {
+      return undefined;
+    }
+  }
+  
+  return value;
+}
+
+/**
+ * Nastaví hodnotu v nested configu (např. adapters.storage)
+ */
+export async function setNestedConfigValue(path: string, value: unknown): Promise<void> {
+  const config = await loadConfig();
+  const parts = path.split('.');
+  const lastPart = parts.pop();
+  
+  if (!lastPart) {
+    throw new Error('Invalid config path');
+  }
+  
+  let current: Record<string, unknown> = config;
+  
+  for (const part of parts) {
+    if (!(part in current) || typeof current[part] !== 'object' || current[part] === null) {
+      current[part] = {};
+    }
+    current = current[part] as Record<string, unknown>;
+  }
+  
+  current[lastPart] = value;
+  await saveConfig(config);
 }

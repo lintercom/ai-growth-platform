@@ -47,3 +47,24 @@ export function getRunsDir(projectName: string): string {
 export function getRunDir(projectName: string, runId: string): string {
   return join(getRunsDir(projectName), runId);
 }
+
+/**
+ * Získá cestu k app config adresáři (pro aplikaci, ne uživatelské config)
+ */
+export function getAppConfigDir(): string {
+  return join(getConfigDir(), 'app');
+}
+
+/**
+ * Získá cestu k artifactům v runu
+ */
+export function getArtifactsDir(projectName: string, runId: string): string {
+  return getRunDir(projectName, runId);
+}
+
+/**
+ * Získá cestu k eventům projektu
+ */
+export function getEventsDir(projectName: string): string {
+  return join(getProjectDir(projectName), 'events');
+}
