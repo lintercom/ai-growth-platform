@@ -1,0 +1,28 @@
+{
+  "name": "@aig/cli",
+  "version": "0.1.0",
+  "description": "CLI nástroje pro AI Growth Platform",
+  "type": "module",
+  "bin": {
+    "aig": "./dist/bin/aig.js"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "clean": "rm -rf dist",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@aig/core": "workspace:*",
+    "@aig/schemas": "workspace:*",
+    "@aig/utils": "workspace:*",
+    "commander": "^11.1.0",
+    "inquirer": "^9.2.12"
+  },
+  "devDependencies": {
+    "@types/inquirer": "^9.0.3",
+    "@types/node": "^20.10.0",
+    "typescript": "^5.3.3"
+  }
+}
