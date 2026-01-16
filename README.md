@@ -37,10 +37,18 @@ Instalační skript automaticky:
 
 **Po instalaci:**
 ```bash
+# Pokud máte CLI globálně nainstalované:
 aig setup     # Nastavení OpenAI API klíče
 aig doctor    # Kontrola prostředí
 aig init      # Inicializace workspace
+
+# Pokud ne, použijte pnpm script:
+pnpm aig setup
+pnpm aig doctor
+pnpm aig init
 ```
+
+**Poznámka pro Windows:** Pokud `pnpm link --global` selže, spusťte `pnpm setup` a restartujte terminál. Nebo použijte `pnpm aig` přímo z root adresáře.
 
 ---
 
