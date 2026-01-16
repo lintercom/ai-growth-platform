@@ -102,14 +102,17 @@ Všechny runy se ukládají do `projects/<project>/runs/<runId>/`:
 ```
 projects/
   demo/
+    meta.json                  # Metadata projektu
     runs/
-      1234567890-abcdefgh/
+      1737976800000-abc123/
         00_run_meta.json      # Metadata runu
         10_analysis.json       # Analýza webu
         50_report.md           # Markdown report (po exportu)
         60_cost_report.json    # Cost tracking
         70_audit_log.json      # Audit log
 ```
+
+Pro detailní popis artefaktů viz [ARTIFACTS.md](./ARTIFACTS.md).
 
 ## Budget management
 

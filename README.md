@@ -44,10 +44,13 @@ aig doctor
 ## 📖 Dokumentace
 
 Viz [docs/](./docs/):
-- `OVERVIEW.md` - Přehled platformy
-- `CLI.md` - CLI příkazy reference
-- `ARTIFACTS.md` - Formáty artefaktů
-- `IMPLEMENTATION_PLAN.md` - Implementační plán
+- **[OVERVIEW.md](docs/OVERVIEW.md)** - Přehled platformy a architektura
+- **[CLI.md](docs/CLI.md)** - Kompletní CLI referenční dokumentace
+- **[USAGE.md](docs/USAGE.md)** - Průvodce použitím a příklady
+- **[ARTIFACTS.md](docs/ARTIFACTS.md)** - Formáty a struktura artefaktů
+- **[ADAPTERS_IMPLEMENTATION.md](docs/ADAPTERS_IMPLEMENTATION.md)** - Adaptační vrstvy
+- **[IMPLEMENTATION_PLAN.md](docs/IMPLEMENTATION_PLAN.md)** - Implementační plán
+- **[GITHUB_SETUP.md](docs/GITHUB_SETUP.md)** - Nastavení GitHub repozitáře
 
 ## 📦 Struktura
 
@@ -66,12 +69,17 @@ Viz [docs/](./docs/):
 
 ## 🎨 Funkce
 
-- ✅ Analýza webů a designu
-- ✅ Architektura systémů a UI
-- ✅ Export artefaktů (MD, JSON)
-- ✅ Interaktivní chat s agenty
-- ✅ Budget management a cost tracking
-- ✅ Audit logging
+- ✅ **Analýza webu** - SEO, UX, performance, accessibility
+- ✅ **Budget management** - automatická kontrola nákladů OpenAI API
+- ✅ **Audit logging** - strukturované logování všech operací
+- ✅ **Export artefaktů** - Markdown reporty
+- ✅ **Storage adaptéry** - File, MySQL, Postgres
+- ✅ **Event tracking** - File, DB-aggregate, External webhooks
+- ✅ **Vector store** - Local (SQLite), External API
+- ✅ **AI-First Web Toolkit** - 12 modulů nahrazujících klasický webový stack
+- 🚧 Design analýza (Design DNA) - v plánu
+- 🚧 Architektura systémů a UI - v plánu
+- 🚧 Interaktivní chat - v plánu
 
 ## 📄 Licence
 
