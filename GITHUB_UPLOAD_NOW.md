@@ -13,20 +13,20 @@
 
 Po vytvoření uvidíte něco jako:
 ```
-https://github.com/VAS-USERNAME/ai-growth-platform.git
+https://github.com/lintercom/ai-growth-platform.git
 ```
 
-## Krok 3: Spusťte tyto příkazy (nahraďte VAS-USERNAME)
+## Krok 3: Spusťte tyto příkazy
 
 ```bash
-git remote add origin https://github.com/VAS-USERNAME/ai-growth-platform.git
+git remote add origin https://github.com/lintercom/ai-growth-platform.git
 git branch -M main
 git push -u origin main
 ```
 
 Pokud už remote existuje, použijte:
 ```bash
-git remote set-url origin https://github.com/VAS-USERNAME/ai-growth-platform.git
+git remote set-url origin https://github.com/lintercom/ai-growth-platform.git
 git branch -M main
 git push -u origin main
 ```
