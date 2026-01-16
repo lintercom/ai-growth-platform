@@ -47,7 +47,6 @@ export class AdapterFactory {
 
     switch (type) {
       case 'file':
-        // FileStorageAdapter bude implementován v PART 2
         const { FileStorageAdapter } = await import('./file-storage.js');
         return new FileStorageAdapter();
       case 'mysql':
@@ -73,7 +72,6 @@ export class AdapterFactory {
       case 'none':
         return new NoneEventSinkAdapter();
       case 'file':
-        // FileEventSinkAdapter bude implementován v PART 2
         const { FileEventSinkAdapter } = await import('./file-event-sink.js');
         return new FileEventSinkAdapter();
       case 'db-aggregate':
@@ -91,7 +89,8 @@ export class AdapterFactory {
    * Vytvoří VectorStoreAdapter
    */
   static async createVectorStoreAdapter(
-    config: AdapterConfig
+    config: AdapterConfig,
+    client?: import('../client.js').OpenAIClient
   ): Promise<VectorStoreAdapter> {
     const type = config.vectorstore || 'none';
 
@@ -99,9 +98,12 @@ export class AdapterFactory {
       case 'none':
         return new NoneVectorStoreAdapter();
       case 'local':
-        // LocalVectorStoreAdapter bude implementován v PART 2
         const { LocalVectorStoreAdapter } = await import('./local-vector-store.js');
-        return new LocalVectorStoreAdapter();
+        const adapter = new LocalVectorStoreAdapter();
+        if (client) {
+          adapter.setClient(client);
+        }
+        return adapter;
       case 'external':
         // ExternalVectorStoreAdapter bude implementován v PART 3
         throw new Error('ExternalVectorStoreAdapter not yet implemented (PART 3)');

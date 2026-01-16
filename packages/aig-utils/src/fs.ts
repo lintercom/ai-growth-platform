@@ -66,3 +66,10 @@ export async function appendJsonl(filePath: string, data: unknown): Promise<void
   const line = JSON.stringify(data) + '\n';
   await appendFile(filePath, line, 'utf-8');
 }
+
+/**
+ * Načte soubor jako text
+ */
+export async function readTextFile(filePath: string): Promise<string> {
+  return readFile(filePath, 'utf-8');
+}

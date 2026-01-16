@@ -31,47 +31,45 @@ Tento dokument popisuje implementaci adaptačních vrstev (StorageAdapter, Event
 
 ## PART 1 — Rozhraní + schémata + výběr adapterů (bez DB konektorů)
 
-**Status:** 🔄 V přípravě  
+**Status:** ✅ Dokončeno  
 **Cíl:** Základní rozhraní, schémata, factory pattern, config, CLI příkazy
 
 ### Úkoly
 
 #### 1.1 Schémata (aig-schemas)
-- [ ] `StorageHealth`, `EventSinkHealth`, `VectorStoreHealth`
-- [ ] `Artifact` (common shape: type, schemaVersion, generatedAt, payload)
-- [ ] `UserEvent`, `EventAggregateQuery`, `EventAggregateResult`
-- [ ] `VectorDocument`, `VectorQuery`, `VectorQueryResult`
+- [x] `StorageHealth`, `EventSinkHealth`, `VectorStoreHealth`
+- [x] `Artifact` (common shape: type, schemaVersion, generatedAt, payload)
+- [x] `UserEvent`, `EventAggregateQuery`, `EventAggregateResult`
+- [x] `VectorDocument`, `VectorQuery`, `VectorQueryResult`
 
 #### 1.2 Rozhraní a základní implementace (ai-toolkit-core)
-- [ ] Interfaces: `StorageAdapter`, `EventSinkAdapter`, `VectorStoreAdapter`
-- [ ] "None" implementace: `NoneEventSinkAdapter`, `NoneVectorStoreAdapter`
-- [ ] Factory: `AdapterFactory` s metodami pro vytváření adapterů
-- [ ] Config volby pro factory
+- [x] Interfaces: `StorageAdapter`, `EventSinkAdapter`, `VectorStoreAdapter`
+- [x] "None" implementace: `NoneEventSinkAdapter`, `NoneVectorStoreAdapter`
+- [x] Factory: `AdapterFactory` s metodami pro vytváření adapterů
+- [x] Placeholder implementace: `FileStorageAdapter`, `FileEventSinkAdapter`, `LocalVectorStoreAdapter` (hází chybu pro PART 2)
 
 #### 1.3 Utils rozšíření (aig-utils)
-- [ ] `getAppConfigDir()` - cross-platform app config adresář
-- [ ] `appendJsonl()` - přidání do JSONL souboru
-- [ ] Path helpers pro artifacts
+- [x] `getAppConfigDir()` - cross-platform app config adresář
+- [x] `appendJsonl()` - přidání do JSONL souboru
+- [x] Path helpers: `getArtifactsDir()`, `getEventsDir()`
 
 #### 1.4 Integrace do WorkflowContext
-- [ ] Rozšířit `WorkflowContext` o:
-  - `storage: StorageAdapter`
-  - `events: EventSinkAdapter`
-  - `vectors: VectorStoreAdapter`
-- [ ] Orchestrator: `init()` a `healthCheck()` na adaptérech při startu
+- [ ] Rozšířit `WorkflowContext` o adaptéry (bude v PART 2, když budou funkční)
+- [ ] Orchestrator: `init()` a `healthCheck()` (bude v PART 2)
 
 #### 1.5 Config rozšíření (aig-utils)
-- [ ] Config schema rozšíření:
+- [x] Config schema rozšíření:
   - `adapters.storage: 'file' | 'mysql' | 'postgres'`
   - `adapters.eventsink: 'none' | 'file' | 'db-aggregate' | 'external'`
   - `adapters.vectorstore: 'none' | 'local' | 'external'`
-- [ ] Defaulty: storage=file, eventsink=none, vectorstore=none
+- [x] Defaulty: storage=file, eventsink=none, vectorstore=none
+- [x] Nested config helpers: `getNestedConfigValue()`, `setNestedConfigValue()`
 
 #### 1.6 CLI příkazy (aig-cli)
-- [ ] `aig adapters show` - zobrazí aktuální konfiguraci adapterů
-- [ ] `aig adapters set storage <type>`
-- [ ] `aig adapters set eventsink <type>`
-- [ ] `aig adapters set vectorstore <type>`
+- [x] `aig adapters show` - zobrazí aktuální konfiguraci adapterů
+- [x] `aig adapters set storage <type>`
+- [x] `aig adapters set eventsink <type>`
+- [x] `aig adapters set vectorstore <type>`
 
 ### Smoke test (PART 1)
 ```bash
@@ -84,9 +82,22 @@ aig adapters set vectorstore none
 ```
 
 ### Status PART 1
-- [ ] Dokončeno
-- [ ] Smoke test prošel
-- [ ] Commit
+- [x] Dokončeno
+- [x] Smoke test prošel
+- [x] Commit
+
+### Implementované v PART 1
+- ✅ Zod schémata pro health checks, artifacts, events, vectors
+- ✅ Interfaces pro všechny tři typy adapterů
+- ✅ None adaptéry (no-op implementace)
+- ✅ AdapterFactory s factory pattern
+- ✅ Config rozšíření s nested values support
+- ✅ CLI příkazy `aig adapters show/set`
+- ✅ Utils rozšíření (appendJsonl, path helpers)
+
+**Poznámky:**
+- File adaptéry jsou placeholdery - budou implementovány v PART 2
+- WorkflowContext integrace bude v PART 2, když budou adaptéry funkční
 
 ---
 

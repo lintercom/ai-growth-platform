@@ -1,7 +1,7 @@
-import { OpenAIClient, BudgetTracker, AuditLogger, createAgentChatParams, webFetch, webExtract } from '@aig/core';
-import { getRunDir, ensureDir, writeJsonFile } from '@aig/utils';
-import { RunMetaSchema, AnalysisSchema, CostReportSchema, AuditLogSchema } from '@aig/schemas';
-import type { Analysis, RunMeta } from '@aig/schemas';
+import { OpenAIClient, BudgetTracker, AuditLogger, createAgentChatParams, webFetch, webExtract, AdapterFactory } from '@aig/core';
+import { getRunDir, ensureDir, writeJsonFile, loadConfig } from '@aig/utils';
+import { RunMetaSchema, AnalysisSchema, CostReportSchema, AuditLogSchema, ArtifactSchema, UserEventSchema } from '@aig/schemas';
+import type { Analysis, RunMeta, Artifact, UserEvent } from '@aig/schemas';
 
 export interface AnalyzeWebOptions {
   projectName: string;
@@ -36,7 +36,20 @@ export async function analyzeWeb(options: AnalyzeWebOptions): Promise<void> {
     status: 'running',
   };
 
-  await writeJsonFile(`${runDir}/00_run_meta.json`, RunMetaSchema.parse(runMeta));
+  // Vytvoříme adaptéry
+  const config = await loadConfig();
+  const adapterConfig = config.adapters || {};
+  const storage = await AdapterFactory.createStorageAdapter(adapterConfig);
+  const events = await AdapterFactory.createEventSinkAdapter(adapterConfig);
+  const vectors = await AdapterFactory.createVectorStoreAdapter(adapterConfig, client);
+
+  // Inicializujeme adaptéry
+  await storage.init();
+  await events.init();
+  await vectors.init();
+
+  // Vytvoříme run přes storage adapter
+  await storage.createRun(options.projectName, options.runId, runMeta);
 
   try {
     auditLogger.info('analyze_web_start', { url: options.url, mode: options.mode });
@@ -113,16 +126,52 @@ Vrať JSON ve formátu:
       ...(typeof analysisData === 'object' && analysisData !== null ? analysisData : {}),
     });
 
-    await writeJsonFile(`${runDir}/10_analysis.json`, analysis);
+    // Uložíme artifact přes storage adapter
+    const analysisArtifact: Artifact = ArtifactSchema.parse({
+      type: 'analysis',
+      schemaVersion: '1.0',
+      generatedAt: new Date().toISOString(),
+      payload: analysis,
+    });
+    await storage.saveArtifact(options.projectName, options.runId, '10_analysis', analysisArtifact);
+
+    // Emitneme event
+    const event: UserEvent = UserEventSchema.parse({
+      eventType: 'analysis_completed',
+      timestamp: new Date().toISOString(),
+      projectId: options.projectName,
+      runId: options.runId,
+      properties: {
+        url: options.url,
+        mode: options.mode,
+      },
+    });
+    await events.emit(event);
 
     // Update run meta
     runMeta.status = 'completed';
     runMeta.completedAt = new Date().toISOString();
-    await writeJsonFile(`${runDir}/00_run_meta.json`, RunMetaSchema.parse(runMeta));
+    const updatedMeta = RunMetaSchema.parse(runMeta);
+    await storage.saveProject(options.projectName, { ...await storage.loadProject(options.projectName), lastRun: updatedMeta });
 
-    // Save cost report and audit log
-    await writeJsonFile(`${runDir}/60_cost_report.json`, CostReportSchema.parse(budgetTracker.createReport(options.runId)));
-    await writeJsonFile(`${runDir}/70_audit_log.json`, AuditLogSchema.parse(auditLogger.createLog(options.runId)));
+    // Save cost report and audit log přes storage
+    const costReport = CostReportSchema.parse(budgetTracker.createReport(options.runId));
+    const costArtifact: Artifact = ArtifactSchema.parse({
+      type: 'cost_report',
+      schemaVersion: '1.0',
+      generatedAt: new Date().toISOString(),
+      payload: costReport,
+    });
+    await storage.saveArtifact(options.projectName, options.runId, '60_cost_report', costArtifact);
+
+    const auditLog = AuditLogSchema.parse(auditLogger.createLog(options.runId));
+    const auditArtifact: Artifact = ArtifactSchema.parse({
+      type: 'audit_log',
+      schemaVersion: '1.0',
+      generatedAt: new Date().toISOString(),
+      payload: auditLog,
+    });
+    await storage.saveArtifact(options.projectName, options.runId, '70_audit_log', auditArtifact);
 
     auditLogger.info('analyze_web_complete', { runId: options.runId });
   } catch (error) {
@@ -131,11 +180,36 @@ Vrať JSON ve formátu:
     runMeta.status = 'failed';
     runMeta.error = error instanceof Error ? error.message : String(error);
     runMeta.completedAt = new Date().toISOString();
-    await writeJsonFile(`${runDir}/00_run_meta.json`, RunMetaSchema.parse(runMeta));
     
-    // Still save cost report and audit log even on error
-    await writeJsonFile(`${runDir}/60_cost_report.json`, CostReportSchema.parse(budgetTracker.createReport(options.runId)));
-    await writeJsonFile(`${runDir}/70_audit_log.json`, AuditLogSchema.parse(auditLogger.createLog(options.runId)));
+    // Save error state přes storage
+    try {
+      const failedMeta = RunMetaSchema.parse(runMeta);
+      await storage.saveProject(options.projectName, { ...await storage.loadProject(options.projectName), lastRun: failedMeta });
+      
+      // Still save cost report and audit log even on error
+      const costReport = CostReportSchema.parse(budgetTracker.createReport(options.runId));
+      const costArtifact: Artifact = ArtifactSchema.parse({
+        type: 'cost_report',
+        schemaVersion: '1.0',
+        generatedAt: new Date().toISOString(),
+        payload: costReport,
+      });
+      await storage.saveArtifact(options.projectName, options.runId, '60_cost_report', costArtifact);
+
+      const auditLog = AuditLogSchema.parse(auditLogger.createLog(options.runId));
+      const auditArtifact: Artifact = ArtifactSchema.parse({
+        type: 'audit_log',
+        schemaVersion: '1.0',
+        generatedAt: new Date().toISOString(),
+        payload: auditLog,
+      });
+      await storage.saveArtifact(options.projectName, options.runId, '70_audit_log', auditArtifact);
+    } catch (storageError) {
+      // Fallback na původní writeJsonFile pokud storage selže
+      await writeJsonFile(`${runDir}/00_run_meta.json`, RunMetaSchema.parse(runMeta));
+      await writeJsonFile(`${runDir}/60_cost_report.json`, CostReportSchema.parse(budgetTracker.createReport(options.runId)));
+      await writeJsonFile(`${runDir}/70_audit_log.json`, AuditLogSchema.parse(auditLogger.createLog(options.runId)));
+    }
     
     throw error;
   }
