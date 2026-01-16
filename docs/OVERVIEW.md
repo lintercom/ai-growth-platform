@@ -77,7 +77,7 @@ Vektorové vyhledávání:
 
 ## 📦 Funkce
 
-### ✅ Implementované
+### Implementované funkce
 
 - **Analýza webu** - SEO, UX, performance, accessibility
 - **Budget management** - automatická kontrola nákladů
@@ -85,15 +85,8 @@ Vektorové vyhledávání:
 - **Export artefaktů** - Markdown reporty
 - **Storage adaptéry** - File, MySQL, Postgres
 - **Event tracking** - File, DB-aggregate, External
-- **Vector store** - Local (SQLite), External
-
-### 🚧 V plánu
-
-- Design analýza (Design DNA)
-- Systémová architektura
-- UI architektura
-- Interaktivní chat
-- JSON bundle export
+- **Vector store** - Local (SQLite), External API
+- **AI-First Web Toolkit** - 12 modulů
 
 ## 🔄 Workflow
 
